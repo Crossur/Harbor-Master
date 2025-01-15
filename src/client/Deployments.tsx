@@ -301,7 +301,7 @@ const Deployments: React.FC = () => {
           type='submit'
           className='mt-4 bg-custom-blue text-white py-3 px-6 rounded-lg shadow-lg font-semibold'
         >
-          {!loading ? 'DeployTest6':'Deploying...'}
+          {!loading ? 'DeployTest7':'Deploying...'}
         </button>
         {loading && 
         <ProjectModal
