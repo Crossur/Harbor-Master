@@ -141,4 +141,3 @@ terraform.tfstate
 terraform-solo-test-cc74ef60ebc0.json
 
 #kubernetes
-/k8s/deploy.yml
