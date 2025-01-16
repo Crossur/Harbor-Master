@@ -106,8 +106,10 @@ const Deployments: React.FC = () => {
   const [hoveredRepo, setHoveredRepo] = useState<string|null>(null);
   const location = useLocation();
   let projectId: number;
-  
+  const url = process.env.PROJECT_URL;
+
   useEffect(() => {
+    console.log(url);
     const fetchRepos = async () => {
       const response = await fetch('/api/users/get-repos').then(data=>data.json());
       setRepos(response);
