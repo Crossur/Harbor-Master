@@ -30,7 +30,6 @@ import { Z_FIXED } from 'zlib';
 
 const fetch = require('node-fetch');
 const app = express();
-const ashraf_metrics = require('./routes/ashraf_routes');
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../../public')));
@@ -47,7 +46,6 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(loggerMiddleware);
 
-app.use('/api/metrics', ashraf_metrics);
 app.use('/api/clusters', clusters);
 app.use('/api/users',userRouter);
 app.use('/auth',authRouter);
