@@ -253,7 +253,7 @@ resource "google_cloudbuild_trigger" "my-trigger" {
       id="prepare-deploy"
       args = [
         "prepare",
-        "filename=${local_file.deploy.filename}",
+        "--filename=${local_file.deploy.filename}",
         "--image=us.gcr.io/PROJECT_ID/arName:latest"
       ]
     }
