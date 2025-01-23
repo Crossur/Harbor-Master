@@ -67,10 +67,12 @@ class DeploymentService {
   executeInXterm(command: string, callback: (error: Error | null, output: string) => void): void {
 
     try{
-
       const fullCommand = `xterm -e "cd customer && ${command} > ${this.outputFilePath} 2>&1 || echo 'Command failed or produced no output' >> ${this.outputFilePath}; echo \$? > ${this.exitFilePath}"`;
 
       console.log(`Executing command: ${fullCommand}`);
+
+      console.log(`Output file path: ${this.outputFilePath}`);
+      console.log(`Exit file path: ${this.exitFilePath}`);
 
       const child: ChildProcess = spawn(fullCommand, { shell: true });
 
@@ -87,32 +89,27 @@ class DeploymentService {
         callback(error, '');
       });
 
-      child.on('exit', () => {
-        // Read the exit code from the file
-        fs.readFile(this.exitFilePath, 'utf8', (err: Error | null, exitCode: string | Buffer) => {
-          if (err) {
-            callback(err, '');
-            return;
-          }
-
+      child.on('exit', async () => {
+        try {
+          // Read the exit code from the file
+          const exitCode = await fs.promises.readFile(this.exitFilePath, 'utf8');
+      
           // Read the output file
-          fs.readFile(this.outputFilePath, 'utf8', (err: Error | null, output: string | Buffer) => {
-            if (err) {
-              console.error('Error reading output file:', err);
-              callback(err, '');
-              return;
-            }
-
-            if(output.toString().includes('failed')){
-              callback(new Error(output.toString()),output.toString());
-            }else if(output.toString().includes('Error:')){
-              callback(new Error(`Command failed \n${output.toString().slice(output.toString().indexOf('Error:'))}`), output.toString().slice(output.toString().indexOf('Error:')));
-            }else{
-              console.log('calling callback');
-              callback(null, output.toString());
-            }
-          });
-        });
+          const output = await fs.promises.readFile(this.outputFilePath, 'utf8');
+      
+          if (output.includes('failed')) {
+            callback(new Error(output), output);
+          } else if (output.includes('Error:')) {
+            const errorMsg = `Command failed \n${output.slice(output.indexOf('Error:'))}`;
+            callback(new Error(errorMsg), output.slice(output.indexOf('Error:')));
+          } else {
+            console.log('calling callback');
+            callback(null, output);
+          }
+        } catch (err) {
+          console.error('Error reading files:', err);
+          callback(err as Error, '');
+        }
       });
     }catch(error){
       

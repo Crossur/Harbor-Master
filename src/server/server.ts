@@ -101,7 +101,7 @@ app.get('/test', async(req,res) => {
 })
 
 app.get('/xterm',async(req,res)=>{
-  const fullCommand = `xterm -e "terraform > output_file.txt 2>&1"`;
+  const fullCommand = `xterm -e "ls > output_file.txt 2>&1"`;
     const child: ChildProcess = spawn(fullCommand, { shell: true })
     child.on('close',async ()=>{
 

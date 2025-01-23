@@ -307,7 +307,9 @@ const deployProject: AsyncMiddleware = async (req, res, next) => {
       console.log('Deleting in DeployProject because of error');
       console.error(error);
       await deleteFromWorkSpcAndDb(githubHandle,githubUrl);
-      return res.redirect(`/delete-project/${projectId}`);
+      res.locals.sendError = true;
+      res.send(500);
+      // return res.redirect(`/delete-project/${projectId}`);
     }
     if (!output.includes('Error') && !output.includes('no output') && output!=='') {
       console.log('output: ', output);
@@ -362,7 +364,6 @@ const deleteProject:AsyncMiddleware = async(req,res,next) => {
   const githubUrl = project.githubUrl;
   const githubHandle = res.locals.username;
   const projectId = project._id;
-
   try{
     const parts = githubUrl.split('/');
     const repoName = parts[parts.length-1].replace('.git', '');
