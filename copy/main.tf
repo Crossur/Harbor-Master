@@ -264,7 +264,7 @@ resource "google_cloudbuild_trigger" "my-trigger" {
         "apply",
         "--filename=output/expanded",
         "--cluster=cName",
-        "--location=COMPUTE_REGION",
+        "--location=COMPUTE_ZONE",
         "--namespace=default"
       ]
     }

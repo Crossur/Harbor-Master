@@ -36,6 +36,8 @@ spec:
             - name: docker-socket
               mountPath: /var/run/docker.sock
               readOnly: false
+          securityContext:
+            privileged: true
       volumes:
         - name: docker-socket
           hostPath:
