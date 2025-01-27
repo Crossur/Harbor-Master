@@ -79,7 +79,7 @@ app.get('/read-db-proj', async (req, res) => {
 
 app.get('/test', async(req,res) => {
 
-  const newUser = await UserModel.findOneAndUpdate({githubHandle:'Crossur'},{ $pull: { projects:'678448d5abaf1f62c11b72e3'} },{ new: true, useFindAndModify: false });
+  // const newUser = await UserModel.findOneAndUpdate({githubHandle:'Crossur'},{ $pull: { projects:'678448d5abaf1f62c11b72e3'} },{ new: true, useFindAndModify: false });
   // const createdProject = await ProjectModel.create({ 
   //   // userId,
   //   appInstallationId:"A",
@@ -96,8 +96,8 @@ app.get('/test', async(req,res) => {
   //   githubUrl:"a",
   //   isDeployed:false
   // });
-  // const newProject = await ProjectModel.findByIdAndDelete({_id:'6732b145ed35f4fe915250fe'});
-  res.send(newUser);
+  const newProject = await ProjectModel.findByIdAndDelete({_id:'6797839d70bcdfa606057a92'});
+  res.send(newProject);
 })
 
 app.get('/xterm',async(req,res)=>{
