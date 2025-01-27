@@ -63,14 +63,14 @@ app.get('/', (req, res, next) => {
 });
 
 // mock endpoint to check db, for development only
-// app.get('/read-db-user', async (req, res) => {
-//   const response = await UserModel.find();
-//   res.json(response);
-// });
-// app.get('/read-db-proj', async (req, res) => {
-//   const response = await ProjectModel.find();
-//   res.json(response);
-// });
+app.get('/read-db-user', async (req, res) => {
+  const response = await UserModel.find();
+  res.json(response);
+});
+app.get('/read-db-proj', async (req, res) => {
+  const response = await ProjectModel.find();
+  res.json(response);
+});
 //only for dev
 // app.get('/clear-db', async (req,res) => {
 //   const response = await ProjectModel.deleteMany({__v:0})
