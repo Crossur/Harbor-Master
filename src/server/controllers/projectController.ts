@@ -308,8 +308,8 @@ const deployProject: AsyncMiddleware = async (req, res, next) => {
       console.error(error);
       await deleteFromWorkSpcAndDb(githubHandle,githubUrl);
       res.locals.sendError = true;
-      res.send(500);
-      // return res.redirect(`/delete-project/${projectId}`);
+      // return res.sendStatus(500);
+      return res.redirect(`/delete-project/${projectId}`);
     }
     if (!output.includes('Error') && !output.includes('no output') && output!=='') {
       console.log('output: ', output);
@@ -364,6 +364,7 @@ const deleteProject:AsyncMiddleware = async(req,res,next) => {
   const githubUrl = project.githubUrl;
   const githubHandle = res.locals.username;
   const projectId = project._id;
+  const sendError = res.locals.sendError;
   try{
     const parts = githubUrl.split('/');
     const repoName = parts[parts.length-1].replace('.git', '');
@@ -382,7 +383,7 @@ const deleteProject:AsyncMiddleware = async(req,res,next) => {
           return reject(error)
         }
         console.log(!output.includes('Error') && !output.includes('no output') && output!=='')
-        if (!output.includes('Error')) {
+        if (!output.includes('Error') || !output.includes('no output')) {
           const user = await UserModel.findOneAndUpdate({githubHandle:githubHandle},{ $pull: { projects: projectId } },{ new: true, useFindAndModify: false });
       
           const projectDeleted = await ProjectModel.findOneAndDelete({_id:projectId});
@@ -395,6 +396,7 @@ const deleteProject:AsyncMiddleware = async(req,res,next) => {
     })
 
   console.log('result:',result);
+  if(sendError === true) return res.sendStatus(500);
   if(result==='success') console.log('result is strictly equal to success');
   if(result==='success') return next();
   else return next(new Error('Error in deleteProject'));

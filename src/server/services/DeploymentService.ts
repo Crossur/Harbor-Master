@@ -209,6 +209,7 @@ class DeploymentService {
 
   async deleteProject(githubHandle:string,githubRepo:string){
     try{
+      console.log(githubHandle,githubRepo);
       const fullCommand = `xterm -e "cd customer && workspace select ${githubHandle}-${githubRepo} && terraform destroy --auto-approve`;
       const child: ChildProcess = spawn(fullCommand,{shell:true});
       return 'success';

@@ -163,7 +163,8 @@ const Deployments: React.FC = () => {
       const deploy = await fetch(`/api/projects/deploy/${id}`, {
         method: 'POST',
       });
-      if (deploy.status === 500) alert('Project was not deployed; there was an error');
+      console.log(deploy.url,'THIS IS DEPLOY URL');
+      if (deploy.status === 500 || deploy.url.includes('http://localhost:3000/delete-project')) alert('Project was not deployed; there was an error');
       else {
         alert('Project Successfully deployed');
         dispatch(addProject(id));

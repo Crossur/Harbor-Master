@@ -58,7 +58,7 @@ resource "local_file" "deploy" {
         spec:
           containers:
             - name: nodeappcontainer
-              image: us.gcr.io/PROJECT_ID/arName:latest
+              image: us.gcr.io/PROJECT_ID/arName
               imagePullPolicy: Always
               ports:
                 - containerPort: 80
@@ -67,6 +67,8 @@ resource "local_file" "deploy" {
                 - name: docker-socket
                   mountPath: /var/run/docker.sock
                   readOnly: false
+              securityContext:
+                privileged: true
           volumes:
             - name: docker-socket
               hostPath:
