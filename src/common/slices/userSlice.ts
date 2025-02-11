@@ -46,3 +46,4 @@ const userSlice = createSlice({
 
 export const { setUser, clearUser,addProject,delProject } = userSlice.actions;
 export default userSlice.reducer;
+export type {UserState};

@@ -79,7 +79,7 @@ app.get('/read-db-proj', async (req, res) => {
 
 app.get('/test', async(req,res) => {
 
-  const newUser = await UserModel.findOneAndUpdate({githubHandle:'Crossur'},{ $pull: { projects:'67a900b6fd93a312648184d0'} },{ new: true, useFindAndModify: false });
+  // const newUser = await UserModel.findOneAndUpdate({githubHandle:'Crossur'},{ $pull: { projects:'67a900b6fd93a312648184d0'} },{ new: true, useFindAndModify: false });
   // const createdProject = await ProjectModel.create({ 
   //   // userId,
   //   appInstallationId:"A",
@@ -96,7 +96,7 @@ app.get('/test', async(req,res) => {
   //   githubUrl:"a",
   //   isDeployed:false
   // });
-  const newProject = await ProjectModel.findByIdAndDelete({_id:'67a900b6fd93a312648184d0'});
+  const newProject = await ProjectModel.findByIdAndDelete({_id:'67aba16dd48229de1bbf1563'});
   res.send(newProject);
 })
 

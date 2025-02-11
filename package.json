@@ -8,7 +8,7 @@
     "start:dev2": "nodemon dist/server/server.js & webpack -w",
     "dev": "concurrently \"webpack serve --open\" \"nodemon --watch src/server --ext ts,js --exec ts-node src/server/server.ts\"",
     "build": "webpack",
-    "start": "node dist/server/server.js",
+    "start": "node --enable-source-maps dist/server/server.js",
     "buildTSC":"tsc",
     "buildBoth":"npm run buildTSC && npm run build"
   },
