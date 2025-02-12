@@ -40,7 +40,7 @@ app.use(express.static(path.join(__dirname, '../../public')));
 //   next();
 // });
 
-app.use(cors({origin: `http://34.27.45.6:3000`,}));
+app.use(cors({origin: `http://35.238.113.97:3000`,}));
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
